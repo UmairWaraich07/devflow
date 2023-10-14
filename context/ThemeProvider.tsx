@@ -1,5 +1,4 @@
 "use client";
-import { document } from "postcss";
 import React, { useState, useEffect, createContext, useContext } from "react";
 
 interface ThemeContextTypes {
@@ -13,19 +12,24 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [mode, setMode] = useState("");
 
   const handleThemeChange = () => {
-    if (mode === "light") {
-      setMode("light");
-      document.documentElement.classList.add("light");
-    }
-    if (mode === "dark") {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
       setMode("dark");
       document.documentElement.classList.add("dark");
+    } else {
+      setMode("light");
+      document.documentElement.classList.remove("dark");
     }
   };
 
   useEffect(() => {
     handleThemeChange();
   }, [mode]);
+
+  // console.log("MODE, ", mode);
 
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>
