@@ -71,3 +71,23 @@ export const BADGE_CRITERIA = {
     GOLD: 100000,
   },
 };
+
+export const topQuestions = [
+  {
+    _id: 1,
+    title:
+      "Would it be appropriate to point out an error in another paper during a referee report?",
+  },
+  { _id: 2, title: "How can an airconditioning machine exist?" },
+  { _id: 3, title: "Interrogated every time crossing UK Border as citizen" },
+  { _id: 4, title: "Async/Await Function Not Handling Errors Properly" },
+  { _id: 5, title: "How do I use express as a custom server in NextJS?" },
+];
+
+export const popularTags = [
+  { _id: 1, name: "next js", totalQuestions: 19 },
+  { _id: 2, name: "react js", totalQuestions: 9 },
+  { _id: 3, name: "javascript", totalQuestions: 11 },
+  { _id: 4, name: "python", totalQuestions: 35 },
+  { _id: 5, name: "css", totalQuestions: 5 },
+];

@@ -1,7 +1,7 @@
 "use client";
 import { SignedOut } from "@clerk/nextjs";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
 import { sidebarLinks } from "@/constants/constants";
 import { usePathname } from "next/navigation";
