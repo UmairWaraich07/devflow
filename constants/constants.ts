@@ -91,3 +91,41 @@ export const popularTags = [
   { _id: 4, name: "python", totalQuestions: 35 },
   { _id: 5, name: "css", totalQuestions: 5 },
 ];
+
+export const homeQuestions = [
+  {
+    _id: 1,
+    title:
+      "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
+    tags: [
+      { _id: 1, name: "next.js" },
+      { _id: 2, name: "react.js" },
+    ],
+    author: {
+      _id: 1,
+      name: "Umair",
+      picture: "https://github.com/shadcn.png",
+    },
+    createdAt: new Date("2023"),
+    upvotes: 14,
+    views: 55,
+    answers: [],
+  },
+  {
+    _id: 2,
+    title: "How to improve your sales using AI?",
+    tags: [
+      { _id: 1, name: "sales & marketing" },
+      { _id: 2, name: "AI" },
+    ],
+    author: {
+      _id: 1,
+      name: "Zubair Amjad",
+      picture: "https://github.com/shadcn.png",
+    },
+    createdAt: new Date("2023"),
+    upvotes: 201,
+    views: 699,
+    answers: [],
+  },
+];
