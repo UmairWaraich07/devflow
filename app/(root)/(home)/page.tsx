@@ -4,11 +4,14 @@ import Filters from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
-import { homeQuestions } from "@/constants/constants";
 import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
+import { getQuestions } from "@/lib/actions/question.action";
 
-export default function Home() {
+export default async function Home() {
+  const result = await getQuestions({});
+  console.log(result.questions);
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -39,8 +42,8 @@ export default function Home() {
       <HomeFilters />
 
       <section className="mt-10 flex w-full flex-col gap-6">
-        {homeQuestions.length > 1 ? (
-          homeQuestions.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}

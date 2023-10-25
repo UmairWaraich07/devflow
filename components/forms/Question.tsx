@@ -18,11 +18,20 @@ import { Button } from "../ui/button";
 import { questionsSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
+
+interface Props {
+  mongoUserId: string;
+}
 
 const type: any = "create";
-const Question = () => {
+
+const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
   //   const log = () => {
   //     if (editorRef.current) {
   //       console.log(editorRef.current.getContent());
@@ -40,12 +49,21 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof questionsSchema>) {
+  async function onSubmit(values: z.infer<typeof questionsSchema>) {
     setIsSubmitting(true);
     try {
       // make asynchronous API Call to the server
       // navigate to the homepage
-      console.log(values);
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+
+      // navigate to the home page
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -132,6 +150,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
