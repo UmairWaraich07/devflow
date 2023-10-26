@@ -8,7 +8,7 @@ const AskaQuestion = async () => {
   const { userId } = auth();
   if (!userId) redirect("/sign-in");
 
-  const mongoUser = await getUserById({ userId: "12345" });
+  const mongoUser = await getUserById({ userId });
   return (
     <section>
       <h1 className="h1-bold text-dark100_light900">Ask a question</h1>

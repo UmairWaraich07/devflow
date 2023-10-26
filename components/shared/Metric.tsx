@@ -28,7 +28,7 @@ const Metric = ({
         alt={alt}
         width={16}
         height={16}
-        className="text-accent-blue"
+        className=" rounded-full text-accent-blue"
       />
 
       <p className={`${textStyles} flex items-center gap-1`}>
