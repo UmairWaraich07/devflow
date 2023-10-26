@@ -1,6 +1,6 @@
-import { Schema, Document, model, models } from "mongoose";
+import { Schema, models, model, Document } from "mongoose";
 
-interface IQuestios extends Document {
+export interface IQuestion extends Document {
   title: string;
   content: string;
   tags: Schema.Types.ObjectId[];
@@ -12,7 +12,7 @@ interface IQuestios extends Document {
   createdAt: Date;
 }
 
-const QuestionShema = new Schema<IQuestios>({
+const QuestionSchema = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
@@ -20,10 +20,10 @@ const QuestionShema = new Schema<IQuestios>({
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   author: { type: Schema.Types.ObjectId, ref: "User" },
-  answers: [{ type: Schema.Types.ObjectId, ref: "Answers" }],
+  answers: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
   createdAt: { type: Date, default: Date.now },
 });
 
-const Question = models.Question || model("Question", QuestionShema);
+const Question = models.Question || model("Question", QuestionSchema);
 
 export default Question;
