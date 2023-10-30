@@ -5,6 +5,7 @@ import { connectToDB } from "../moongose";
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
@@ -71,6 +72,18 @@ export const deleteUser = async (params: DeleteUserParams) => {
     // TODO: delete user answers etc
   } catch (error) {
     console.log(`Delete user error : ${error}`);
+    throw error;
+  }
+};
+
+export const getAllUsers = async (params: GetAllUsersParams) => {
+  try {
+    await connectToDB();
+    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    const users = await User.find({}).sort({ createdAt: -1 });
+    return { users };
+  } catch (error) {
+    console.log(`Error while fetching all users : ${error}`);
     throw error;
   }
 };

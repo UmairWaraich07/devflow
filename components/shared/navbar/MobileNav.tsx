@@ -19,7 +19,7 @@ export const NavContent = () => {
     <section className="flex h-full flex-col gap-6 pb-12 pt-16">
       {sidebarLinks.map((item) => {
         const isActive =
-          (pathname.includes(item.route) && pathname.length > 1) ||
+          (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
         return (
           <SheetClose asChild key={item.label}>
