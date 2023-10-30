@@ -21,12 +21,11 @@ const TagCard = async ({ tag }: Props) => {
         <p className="small-regular mt-4">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus,
           tempora? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Laborum corporis aliquid ratione, labore libero repudiandae.
         </p>
 
         <div className="small-medium text-dark400_light500 mt-3.5 flex items-center">
           <span className="body-semibold primary-text-gradient mr-2.5">
-            {tag.questions.length}
+            {tag.questions.length}+
           </span>
           Questions
         </div>

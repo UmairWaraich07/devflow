@@ -8,7 +8,6 @@ import React from "react";
 
 const Tags = async () => {
   const result = await getAllTags({});
-  console.log(result);
 
   return (
     <div className="w-full">
