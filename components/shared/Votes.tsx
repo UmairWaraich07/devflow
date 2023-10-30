@@ -1,4 +1,5 @@
 "use client";
+import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import {
   downvoteAnswer,
   downvoteQuestion,
@@ -31,7 +32,15 @@ const Votes = ({
 }: Props) => {
   const pathname = usePathname();
 
-  const handleSave = () => {};
+  const handleSave = async () => {
+    console.log("inside handleSave");
+
+    await toggleSaveQuestion({
+      questionId: itemId,
+      userId: JSON.parse(userId),
+      path: pathname,
+    });
+  };
   const handleVote = async (action: any) => {
     if (!userId) return;
     if (action === "upvote") {
@@ -68,7 +77,7 @@ const Votes = ({
         });
       } else if (type === "Answer") {
         await downvoteAnswer({
-          answerId: itemId,
+          answerId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,

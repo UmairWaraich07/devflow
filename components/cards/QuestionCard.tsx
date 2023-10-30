@@ -17,7 +17,7 @@ interface Props {
     picture: string;
   };
   createdAt: Date;
-  upvotes: number;
+  upvotes: string[];
   views: number;
   answers: any[];
 }
@@ -68,7 +68,7 @@ const QuestionCard = ({
           <Metric
             imgSrc="/assets/icons/like.svg"
             alt="Upvotes"
-            value={abbreviateNumber(upvotes)}
+            value={abbreviateNumber(upvotes.length)}
             title="Votes"
             textStyles="small-medium text-dark400_light800"
           />

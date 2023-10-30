@@ -73,7 +73,7 @@ const AllAnswer = async ({
                 <div className="flex justify-end">
                   <Votes
                     type="Answer"
-                    itemId={answer._id}
+                    itemId={JSON.stringify(answer._id)}
                     userId={JSON.stringify(authorId)}
                     upvotes={answer.upvotes.length}
                     hasupVoted={answer.upvotes.includes(authorId)}
