@@ -43,3 +43,26 @@ export const abbreviateNumber = (num: number): string => {
     return num.toString();
   }
 };
+
+export function formatJoinDate(dateString: string): string {
+  const date = new Date(dateString);
+  const monthNames: string[] = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const month: string = monthNames[date.getUTCMonth()];
+  const year: number = date.getUTCFullYear();
+
+  return `Joined at ${month} ${year}`;
+}

@@ -3,6 +3,8 @@ import Link from "next/link";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { abbreviateNumber, getTimestamp } from "@/lib/utils";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteAction from "../shared/EditDeleteAction";
 
 interface Props {
   _id: string;
@@ -15,14 +17,17 @@ interface Props {
     _id: string;
     name: string;
     picture: string;
+    clerkId: string;
   };
   createdAt: Date;
   upvotes: string[];
   views: number;
-  answers: any[];
+  answers: Array<Object>;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
+  clerkId,
   _id,
   title,
   tags,
@@ -32,10 +37,11 @@ const QuestionCard = ({
   views,
   answers,
 }: Props) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
   return (
     <div className="light-border dark:dark-gradient rounded-[10px] border bg-light-900 px-11 py-9 shadow-sm max-sm:px-8 max-sm:py-6">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div>
+        <div className="">
           <p className="subtle-regular text-dark400_light700 line-clamp-1 sm:hidden">
             {getTimestamp(createdAt)}
           </p>
@@ -46,6 +52,11 @@ const QuestionCard = ({
           </Link>
         </div>
         {/* If signed In add edit delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
@@ -60,7 +71,7 @@ const QuestionCard = ({
             title={getTimestamp(createdAt)}
             value={author.name}
             textStyles="body-medium text-dark400_light700"
-            href={`profile/${_id}`}
+            href={`profile/${author.clerkId}`}
             isAuthor
           />
         </div>

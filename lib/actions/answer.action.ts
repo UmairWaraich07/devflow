@@ -2,9 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../moongose";
-import { CreateAnswerParams, GetAnswersParams } from "./shared.types";
+import {
+  CreateAnswerParams,
+  DeleteAnswerParams,
+  GetAnswersParams,
+} from "./shared.types";
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
+import Interaction from "@/database/interaction.model";
 
 export const createAnswer = async (params: CreateAnswerParams) => {
   try {
@@ -41,6 +46,27 @@ export const getAnswers = async (params: GetAnswersParams) => {
     return { answers };
   } catch (error) {
     console.log(`error while fetching answers : ${error}`);
+    throw error;
+  }
+};
+
+export const deleteUserAnswer = async (params: DeleteAnswerParams) => {
+  try {
+    connectToDB();
+    const { answerId, path } = params;
+    const answer = await Answer.findById(answerId);
+    if (!answer) throw new Error("Answer not found!");
+
+    await answer.deleteOne({ _id: answerId });
+    await Question.updateMany(
+      { _id: answer.question },
+      { $pull: { answers: answerId } }
+    );
+    await Interaction.deleteMany({ answer: answerId });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

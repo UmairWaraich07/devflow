@@ -1,5 +1,5 @@
 "use client";
-import { SignedOut } from "@clerk/nextjs";
+import { SignedOut, useAuth } from "@clerk/nextjs";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 const LeftsidebarContent = () => {
+  const { userId: clerkId } = useAuth();
   const pathname = usePathname();
   return (
     <section className="flex h-full flex-col gap-6 pb-12">
@@ -15,6 +16,10 @@ const LeftsidebarContent = () => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
+
+        if (item.route === "/profile") {
+          item.route = `/profile/${clerkId}`;
+        }
 
         return (
           <Link

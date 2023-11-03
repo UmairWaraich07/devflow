@@ -9,3 +9,15 @@ export const questionsSchema = z.object({
 export const answerSchema = z.object({
   answer: z.string().min(100),
 });
+
+export const profileSchema = z.object({
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters.",
+  }),
+  username: z.string().min(3, {
+    message: "Username must be at least 3 characters.",
+  }),
+  portfolioWebsite: z.string().min(5),
+  location: z.string().min(2),
+  bio: z.string().min(10),
+});

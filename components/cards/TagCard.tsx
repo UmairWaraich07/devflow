@@ -12,13 +12,16 @@ const TagCard = async ({ tag }: Props) => {
   return (
     <Link
       href={`/tags/${tag._id}`}
-      className=" shadow-light100_darknone w-full xs:w-[260px]"
+      className=" shadow-light100_darknone w-full sm:w-[260px]"
     >
-      <article className="background-light900_dark200 light-border  flex flex-col items-start rounded-2xl border px-8 py-10">
-        <div className="paragraph-semibold light-border background-light800_dark400 rounded-md border px-5 py-2 shadow-light-300 dark:shadow-none ">
+      <article className="background-light900_dark200 light-border  flex flex-col items-start rounded-2xl border px-8 py-10 ">
+        <div
+          className="paragraph-semibold light-border background-light800_dark400 text-dark300_light900 rounded-md
+        border px-5 py-2 shadow-light-300 dark:shadow-none "
+        >
           {tag.name}
         </div>
-        <p className="small-regular mt-4">
+        <p className="small-regular text-dark300_light700 mt-4">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus,
           tempora? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
         </p>

@@ -5,11 +5,16 @@ import { connectToDB } from "../moongose";
 import Tag from "@/database/tag.model";
 import {
   CreateQuestionParams,
+  DeleteQuestionParams,
+  EditQuestionParams,
   GetQuestionByIdParams,
   GetQuestionParams,
 } from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
+import Answer from "@/database/answer.model";
+import Interaction from "@/database/interaction.model";
+import console from "console";
 
 export const getQuestions = async (params: GetQuestionParams) => {
   try {
@@ -78,6 +83,44 @@ export const getQuestionById = async (params: GetQuestionByIdParams) => {
     return question;
   } catch (error) {
     console.log(`Error while fetching question details  : ${error}`);
+    throw error;
+  }
+};
+
+export const deleteUserQuestion = async (params: DeleteQuestionParams) => {
+  try {
+    connectToDB();
+    const { questionId, path } = params;
+    await Question.deleteOne({ _id: questionId });
+    await Answer.deleteMany({ question: questionId });
+    await Interaction.deleteMany({ question: questionId });
+    await Tag.updateMany(
+      { questions: questionId },
+      { $pull: { questions: questionId } }
+    );
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const editQuestion = async (params: EditQuestionParams) => {
+  try {
+    connectToDB();
+
+    const { questionId, title, content, path } = params;
+    const question = await Question.findById(questionId).populate("tags");
+    if (!question) throw new Error("Question not found");
+
+    question.title = title;
+    question.content = content;
+    await question.save();
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(`Error while editing question : ${error}`);
     throw error;
   }
 };
