@@ -1,10 +1,13 @@
-import { popularTags, topQuestions } from "@/constants/constants";
+import { popularTags } from "@/constants/constants";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RenderTag from "./RenderTag";
+import { getHotQuestions } from "@/lib/actions/question.action";
 
-const Rightsidebar = () => {
+const Rightsidebar = async () => {
+  const topQuestions = await getHotQuestions();
+
   return (
     <aside
       className="background-light900_dark200 text-dark100_light900 light-border custom-scrollbar sticky right-0 top-0 flex h-screen w-[350px] flex-col
@@ -16,7 +19,7 @@ const Rightsidebar = () => {
           {topQuestions.map((question) => (
             <Link
               key={question._id}
-              href={`/questions/${question._id}`}
+              href={`/question/${question._id}`}
               className="flex items-start justify-between gap-6"
             >
               <p className="body-medium text-dark500_light700 flex-1">
