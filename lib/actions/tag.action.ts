@@ -82,3 +82,19 @@ export const getQuestionsByTagId = async (
     throw error;
   }
 };
+
+export const getPopularTags = async () => {
+  try {
+    connectToDB();
+    const popularTags = await Tag.aggregate([
+      { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
+      { $sort: { numberOfQuestions: -1 } },
+      { $limit: 5 },
+    ]);
+
+    return popularTags;
+  } catch (error) {
+    console.log(`Error while fetching popular Tags : ${error}`);
+    throw error;
+  }
+};

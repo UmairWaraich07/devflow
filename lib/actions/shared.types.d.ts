@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 export interface GetQuestionParams {
   page?: number;
   pageSize?: number;
-  searchQuery?: number;
+  searchQuery?: string;
   filter?: number;
 }
 

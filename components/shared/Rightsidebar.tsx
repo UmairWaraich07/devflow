@@ -1,12 +1,13 @@
-import { popularTags } from "@/constants/constants";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RenderTag from "./RenderTag";
 import { getHotQuestions } from "@/lib/actions/question.action";
+import { getPopularTags } from "@/lib/actions/tag.action";
 
 const Rightsidebar = async () => {
   const topQuestions = await getHotQuestions();
+  const popularTags = await getPopularTags();
 
   return (
     <aside
@@ -45,7 +46,7 @@ const Rightsidebar = async () => {
               key={tag._id}
               _id={tag._id}
               name={tag.name}
-              totalQuestions={tag.totalQuestions}
+              totalQuestions={tag.numberOfQuestions}
               showCount
             />
           ))}
