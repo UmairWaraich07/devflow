@@ -5,7 +5,7 @@ export interface GetQuestionParams {
   page?: number;
   pageSize?: number;
   searchQuery?: string;
-  filter?: number;
+  filter?: string;
 }
 
 export interface CreateAnswerParams {

@@ -9,6 +9,7 @@ import {
 } from "./shared.types";
 import Tag from "@/database/tag.model";
 import Question from "@/database/question.model";
+import { FilterQuery } from "mongoose";
 
 export const getTopInteractedTags = async (
   params: GetTopInteractedTagsParams
@@ -35,7 +36,36 @@ export const getTopInteractedTags = async (
 export const getAllTags = async (params: GetAllTagsParams) => {
   try {
     await connectToDB();
-    const tags = await Tag.find({});
+    const { searchQuery, filter } = params;
+    const query: FilterQuery<typeof Tag> = {};
+    if (searchQuery) {
+      query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
+    }
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "popular":
+        sortOptions = { questions: -1 };
+
+        break;
+      case "recent":
+        sortOptions = { createdOn: -1 };
+
+        break;
+      case "name":
+        sortOptions = { name: 1 };
+
+        break;
+      case "old":
+        sortOptions = { createdOn: 1 };
+        break;
+
+      default:
+        break;
+    }
+
+    const tags = await Tag.find(query).sort(sortOptions);
     return tags;
   } catch (error) {
     console.log(`Error while fetching all tags : ${error}`);
@@ -52,7 +82,9 @@ export const getQuestionsByTagId = async (
 
     // const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
-    const tag = await Tag.findOne({ tagId }).populate({
+    console.log(tagId);
+
+    const tag = await Tag.findOne({ _id: tagId }).populate({
       path: "questions",
       model: Question,
       match: searchQuery

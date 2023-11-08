@@ -21,19 +21,40 @@ export const getQuestions = async (params: GetQuestionParams) => {
   try {
     await connectToDB();
 
-    const { searchQuery } = params;
+    const { searchQuery, filter } = params;
 
     const query: FilterQuery<typeof Question> = {};
+
     if (searchQuery) {
       query.$or = [
         { title: { $regex: new RegExp(searchQuery, "i") } },
         { content: { $regex: new RegExp(searchQuery, "i") } },
       ];
     }
+    let sortOptions = {};
+    if (filter) {
+      switch (filter) {
+        case "newest":
+          sortOptions = { createdAt: -1 };
+          break;
+        case "recommended":
+          // Implement recommended filter logic
+
+          break;
+        case "frequent":
+          // Implement frequent filter logic
+          sortOptions = { views: -1 };
+          break;
+        case "unanswered":
+          query.answers = { $size: 0 };
+          break;
+      }
+    }
+
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
-      .sort({ createdAt: -1 });
+      .sort(sortOptions);
     return { questions };
   } catch (error) {
     console.log(`Error while fetching questions  : ${error}`);

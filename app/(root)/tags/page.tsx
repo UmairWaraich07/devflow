@@ -5,9 +5,13 @@ import { getAllTags } from "@/lib/actions/tag.action";
 import { Link } from "lucide-react";
 import TagCard from "@/components/cards/TagCard";
 import React from "react";
+import { SearchParamsProps } from "@/types";
 
-const Tags = async () => {
-  const result = await getAllTags({});
+const Tags = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllTags({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
 
   return (
     <div className="w-full">
@@ -18,7 +22,7 @@ const Tags = async () => {
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for amazing minds here..."
           iconPosition="left"
-          route="/community"
+          route="/tags"
           otherClasses="flex-1"
         />
         <Filters

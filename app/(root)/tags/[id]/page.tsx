@@ -5,12 +5,11 @@ import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 import { URLProps } from "@/types";
 import React from "react";
 
-const Page = async ({ params }: URLProps) => {
-  const id = params.id;
-
-  const result = await getQuestionsByTagId(id);
-
-  console.log({ result });
+const Page = async ({ params, searchParams }: URLProps) => {
+  const result = await getQuestionsByTagId({
+    tagId: params.id,
+    searchQuery: searchParams.q,
+  });
 
   return (
     <div className="w-full">
@@ -21,7 +20,7 @@ const Page = async ({ params }: URLProps) => {
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for tag questions..."
           iconPosition="left"
-          route={`/tags/${id}`}
+          route={`/tags/${params.id}`}
           otherClasses="flex-1"
         />
       </div>
