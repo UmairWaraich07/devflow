@@ -6,11 +6,13 @@ import { Link } from "lucide-react";
 import TagCard from "@/components/cards/TagCard";
 import React from "react";
 import { SearchParamsProps } from "@/types";
+import Pagination from "@/components/shared/Pagination";
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams?.page ? +searchParams.page : 1,
   });
 
   return (
@@ -32,8 +34,8 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
       </div>
 
       <section className="mt-12 flex w-full flex-wrap items-center justify-start gap-3">
-        {result.length > 0 ? (
-          result.map((tag) => <TagCard key={tag._id} tag={tag} />)
+        {result.tags.length > 0 ? (
+          result.tags.map((tag) => <TagCard key={tag._id} tag={tag} />)
         ) : (
           <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
             <p>No Tags yet!</p>
@@ -43,6 +45,13 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
           </div>
         )}
       </section>
+
+      <div className="mt-10">
+        <Pagination
+          currentPage={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div>
     </div>
   );
 };

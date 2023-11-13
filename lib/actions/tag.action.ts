@@ -36,8 +36,9 @@ export const getTopInteractedTags = async (
 export const getAllTags = async (params: GetAllTagsParams) => {
   try {
     await connectToDB();
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 20 } = params;
     const query: FilterQuery<typeof Tag> = {};
+    const skipAmount = (page - 1) * pageSize;
     if (searchQuery) {
       query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
     }
@@ -65,8 +66,15 @@ export const getAllTags = async (params: GetAllTagsParams) => {
         break;
     }
 
-    const tags = await Tag.find(query).sort(sortOptions);
-    return tags;
+    const totalTagsSize = await Tag.countDocuments(query);
+
+    const tags = await Tag.find(query)
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort(sortOptions);
+
+    const isNext = totalTagsSize > skipAmount + tags.length;
+    return { tags, isNext };
   } catch (error) {
     console.log(`Error while fetching all tags : ${error}`);
     throw error;
@@ -78,11 +86,9 @@ export const getQuestionsByTagId = async (
 ) => {
   try {
     await connectToDB();
-    const { tagId, searchQuery } = params;
+    const { tagId, searchQuery, page = 1, pageSize = 10 } = params;
 
-    // const tagFilter: FilterQuery<ITag> = { _id: tagId };
-
-    console.log(tagId);
+    const skipAmount = (page - 1) * pageSize;
 
     const tag = await Tag.findOne({ _id: tagId }).populate({
       path: "questions",
@@ -92,6 +98,8 @@ export const getQuestionsByTagId = async (
         : {},
       options: {
         sort: { createdAt: -1 },
+        skip: skipAmount,
+        limit: pageSize + 1, // to check if there is a next page
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },
@@ -108,7 +116,9 @@ export const getQuestionsByTagId = async (
     }
     const questions = tag.questions;
 
-    return { tagName: tag.name, questions };
+    const isNext = questions.length > pageSize;
+
+    return { tagName: tag.name, questions, isNext };
   } catch (error) {
     console.log(`Error while getting questions by tag id : ${error}`);
     throw error;

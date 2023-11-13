@@ -21,9 +21,10 @@ export const getQuestions = async (params: GetQuestionParams) => {
   try {
     await connectToDB();
 
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
 
     const query: FilterQuery<typeof Question> = {};
+    const skipAmount = (page - 1) * pageSize;
 
     if (searchQuery) {
       query.$or = [
@@ -52,10 +53,17 @@ export const getQuestions = async (params: GetQuestionParams) => {
     }
 
     const questions = await Question.find(query)
+      .skip(skipAmount)
+      .limit(pageSize)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
       .sort(sortOptions);
-    return { questions };
+
+    const totalQuestionsSize = await Question.countDocuments();
+
+    const isNext = Math.ceil(totalQuestionsSize / pageSize) > page;
+    // const isNext = totalQuestionsSize > skipAmount + questions.length;
+    return { questions, isNext };
   } catch (error) {
     console.log(`Error while fetching questions  : ${error}`);
     throw error;
