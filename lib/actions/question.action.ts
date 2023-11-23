@@ -99,8 +99,18 @@ export const createQuestion = async (params: CreateQuestionParams) => {
     });
 
     // create an interaction record for the user's ask question
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tags: tagDocuments,
+    });
 
     // Increment the author's reputation +5
+    if (JSON.stringify(author) !== JSON.stringify(question.author)) {
+      // only increase the reputation on answering other's question
+      await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+    }
 
     revalidatePath(path);
   } catch (error) {}

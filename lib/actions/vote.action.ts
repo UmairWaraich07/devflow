@@ -5,6 +5,7 @@ import { connectToDB } from "../moongose";
 import { AnswerVoteParams, QuestionVoteParams } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
+import User from "@/database/user.model";
 
 export const upvoteQuestion = async (params: QuestionVoteParams) => {
   try {
@@ -30,7 +31,22 @@ export const upvoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error("Question not found!");
     }
 
-    // increment author's reputation
+    console.log(userId);
+    console.log(JSON.stringify(question.author));
+
+    // increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question
+    if (JSON.stringify(userId) !== JSON.stringify(question.author)) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasupVoted ? -1 : 1 },
+      });
+    }
+
+    // increment author's reputation by +10/-10 for receiving an upvote/downvote to the question
+    if (JSON.stringify(userId) !== JSON.stringify(question.author)) {
+      await User.findByIdAndUpdate(question.author, {
+        $inc: { reputation: hasupVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -65,7 +81,19 @@ export const downvoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error("Question not found!");
     }
 
-    // increment author's reputation
+    // increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question
+    if (JSON.stringify(userId) !== JSON.stringify(question.author)) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasdownVoted ? 1 : -1 },
+      });
+    }
+
+    // increment author's reputation by +10/-10 for receiving an upvote/downvote to the question
+    if (JSON.stringify(userId) !== JSON.stringify(question.author)) {
+      await User.findByIdAndUpdate(question.author, {
+        $inc: { reputation: hasdownVoted ? 10 : -10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -100,7 +128,19 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error("Question not found!");
     }
 
-    // increment author's reputation
+    // increment author's reputation by +2/-2 for upvoting/revoking an upvote to the answer
+    if (JSON.stringify(userId) !== JSON.stringify(answer.author)) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasupVoted ? -2 : 2 },
+      });
+    }
+
+    // increment author's reputation by +10/-10 for receiving an upvote/downvote to the answer
+    if (JSON.stringify(userId) !== JSON.stringify(answer.author)) {
+      await User.findByIdAndUpdate(answer.author, {
+        $inc: { reputation: hasupVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -135,7 +175,19 @@ export const downvoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error("Question not found!");
     }
 
-    // increment author's reputation
+    // increment author's reputation by +2/-2 for upvoting/revoking an upvote to the answer
+    if (JSON.stringify(userId) !== JSON.stringify(answer.author)) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasdownVoted ? 2 : -2 },
+      });
+    }
+
+    // increment author's reputation by +10/-10 for receiving an upvote/downvote to the answer
+    if (JSON.stringify(userId) !== JSON.stringify(answer.author)) {
+      await User.findByIdAndUpdate(answer.author, {
+        $inc: { reputation: hasdownVoted ? 10 : -10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {

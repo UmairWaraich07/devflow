@@ -10,6 +10,7 @@ import {
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
 import Interaction from "@/database/interaction.model";
+import User from "@/database/user.model";
 
 export const createAnswer = async (params: CreateAnswerParams) => {
   try {
@@ -21,11 +22,26 @@ export const createAnswer = async (params: CreateAnswerParams) => {
     const newAnswer = await Answer.create({ content, author, question });
 
     // Add the answer to the question's answers array
-    await Question.findByIdAndUpdate(question, {
+    const questionObject = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
 
-    // TODO: Add interaction...
+    // add interaction
+    await Interaction.create({
+      user: author,
+      question,
+      action: "answer",
+      answer: newAnswer._id,
+      tags: questionObject.tags,
+    });
+
+    console.log(JSON.stringify(author));
+    console.log(JSON.stringify(newAnswer.author));
+    // increment the reputation by 10
+    if (JSON.stringify(author) !== JSON.stringify(newAnswer.author)) {
+      // only increase the reputation on answering other's question
+      await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
+    }
 
     revalidatePath(path);
   } catch (error) {

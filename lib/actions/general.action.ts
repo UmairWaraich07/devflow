@@ -1,11 +1,11 @@
 "use server";
 
 import Answer from "@/database/answer.model";
-import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
 import { SearchParams } from "./shared.types";
 import { connectToDB } from "../moongose";
+import Question from "@/database/question.model";
 
 const searchableTypes = ["question", "answer", "tag", "user"];
 
