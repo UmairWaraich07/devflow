@@ -7,6 +7,7 @@ import TagCard from "@/components/cards/TagCard";
 import React from "react";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
+import Loading from "./loading";
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({

@@ -8,6 +8,7 @@ import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import React from "react";
+import Loading from "./loading";
 
 const Collection = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
