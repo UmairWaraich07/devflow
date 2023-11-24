@@ -1,8 +1,16 @@
 import Question from "@/components/forms/Question";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "DevFlow Ask a Question - Get Programming Help from Experts",
+  description:
+    "Ask a programming question on DevFlow and get help from developers around the world. Share knowledge and collaborate with the community.",
+  keywords: ["programming", "help", "questions", "answers", "support"],
+};
 
 const AskaQuestion = async () => {
   const { userId } = auth();

@@ -10,13 +10,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Stats from "@/components/shared/Stats";
 import QuestionsTab from "@/components/shared/QuestionsTab";
 import AnswersTab from "@/components/shared/AnswersTab";
-import Loading from "./loading";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "DevFlow Profile - Showcase Your Programming Expertise",
+  description:
+    "View your DevFlow profile and manage your programming questions and answers.",
+  keywords: ["programming", "profile", "portfolio", "showcase", "connect"],
+};
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
   const userInfo = await getUserInfo({ userId: params.id });
-  const isLoading = true;
-  if (isLoading) return <Loading />;
+
   return (
     <>
       <div className="flex flex-col-reverse items-start justify-between sm:flex-row">

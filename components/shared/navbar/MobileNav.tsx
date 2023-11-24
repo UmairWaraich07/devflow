@@ -29,7 +29,7 @@ export const NavContent = () => {
                 isActive
                   ? "primary-gradient rounded-lg text-light-900"
                   : "text-dark300_light900"
-              } flex items-center justify-start gap-4 bg-transparent p-4`}
+              } flex items-center justify-start gap-4 bg-transparent p-4 cursor-pointer`}
             >
               <Image
                 src={item.imgURL}
@@ -39,7 +39,11 @@ export const NavContent = () => {
                 className={`${isActive ? "" : "invert-colors"}`}
               />
 
-              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
+              <p
+                className={`${
+                  isActive ? "base-bold" : "base-medium"
+                } cursor-pointer`}
+              >
                 {item.label}
               </p>
             </Link>
@@ -66,14 +70,14 @@ const MobileNav = () => {
         side="left"
         className="background-light900_dark200 custom-scrollbar overflow-y-auto border-none"
       >
-        <Link href="/" className="flex items-center gap-1">
+        <Link href="/" className="flex items-center gap-1 cursor-pointer">
           <Image
             src="/assets/images/site-logo.svg"
             width={23}
             height={23}
             alt="DevFlow"
           />
-          <p className="h2-bold text-dark100_light900 font-spaceGrotesk ">
+          <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
             Dev <span className="text-primary-500">Flow</span>
           </p>
         </Link>

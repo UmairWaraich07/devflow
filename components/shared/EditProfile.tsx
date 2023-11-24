@@ -53,6 +53,10 @@ const EditProfile = ({ userData, clerkId }: Props) => {
         path: pathname,
       });
       router.back();
+      toast({
+        title: "Profile Updated",
+        description: "Your profile information has been updated successfully",
+      });
     } catch (error) {
       console.log("Error while submitting user profile Data : ", error);
     } finally {
@@ -67,7 +71,7 @@ const EditProfile = ({ userData, clerkId }: Props) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Name <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -89,7 +93,7 @@ const EditProfile = ({ userData, clerkId }: Props) => {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Username <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -112,7 +116,9 @@ const EditProfile = ({ userData, clerkId }: Props) => {
           name="portfolioWebsite"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Portfolio Link</FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
+                Portfolio Link
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Your portfolio link"
@@ -133,7 +139,7 @@ const EditProfile = ({ userData, clerkId }: Props) => {
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Location <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -156,7 +162,7 @@ const EditProfile = ({ userData, clerkId }: Props) => {
           name="bio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Bio <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -178,12 +184,6 @@ const EditProfile = ({ userData, clerkId }: Props) => {
             className="primary-gradient w-fit !text-light-900"
             type="submit"
             disabled={isSubmitting}
-            onClick={() => {
-              toast({
-                title: "Scheduled: Catch up",
-                description: "Friday, February 10, 2023 at 5:57 PM",
-              });
-            }}
           >
             {isSubmitting ? "Submitting..." : "Submit"}
           </Button>

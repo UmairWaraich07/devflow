@@ -58,7 +58,7 @@ const AllAnswer = async ({
                   />
 
                   <div className="flex flex-col sm:flex-row sm:items-center">
-                    <p className="body-semibold text-dark300_light700">
+                    <p className="body-semibold text-dark300_light700 cursor-pointer">
                       {answer.author.name}
                     </p>
 

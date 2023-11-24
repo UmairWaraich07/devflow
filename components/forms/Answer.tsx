@@ -18,6 +18,7 @@ import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   questionId: string;
@@ -54,6 +55,11 @@ const Answer = ({ questionId, authorId, question }: Props) => {
         const editor = editorRef.current as any;
         editor.setContent("");
       }
+
+      toast({
+        title: "Answer Posted",
+        description: "Your answer has been posted successfully",
+      });
     } catch (error) {
       console.log(`errro while handling create answer : ${error}`);
       throw error;
@@ -63,10 +69,9 @@ const Answer = ({ questionId, authorId, question }: Props) => {
   }
 
   const generateAIAnswer = async () => {
-    // if (!authorId) return;
+    if (!authorId) return;
     setIsAISubmitting(true);
     try {
-      console.log("Inside AI answer");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
         {
@@ -81,6 +86,11 @@ const Answer = ({ questionId, authorId, question }: Props) => {
         const editor = editorRef.current as any;
         editor.setContent(formattedText);
       }
+      toast({
+        title: "AI Answer Generated",
+        description:
+          "The AI has successfully generated an answer based on your query.",
+      });
     } catch (error) {
       console.log(`Error while generating AI answer ${error}`);
       throw error;

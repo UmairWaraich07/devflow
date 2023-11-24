@@ -29,7 +29,7 @@ const LeftsidebarContent = () => {
               isActive
                 ? "primary-gradient rounded-lg text-light-900"
                 : "text-dark300_light900"
-            } flex items-center justify-start gap-4 bg-transparent p-4`}
+            } flex items-center justify-start gap-4 bg-transparent p-4 cursor-pointer`}
           >
             <Image
               src={item.imgURL}
@@ -42,7 +42,7 @@ const LeftsidebarContent = () => {
             <p
               className={`${
                 isActive ? "base-bold" : "base-medium"
-              } max-lg:hidden`}
+              } max-lg:hidden cursor-pointer`}
             >
               {item.label}
             </p>

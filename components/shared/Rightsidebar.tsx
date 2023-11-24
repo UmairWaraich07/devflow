@@ -23,7 +23,7 @@ const Rightsidebar = async () => {
               href={`/question/${question._id}`}
               className="flex items-start justify-between gap-6"
             >
-              <p className="body-medium text-dark500_light700 flex-1">
+              <p className="body-medium text-dark500_light700 flex-1 cursor-pointer">
                 {question.title}
               </p>
               <Image

@@ -6,6 +6,7 @@ import { AnswerVoteParams, QuestionVoteParams } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
 import User from "@/database/user.model";
+import Interaction from "@/database/interaction.model";
 
 export const upvoteQuestion = async (params: QuestionVoteParams) => {
   try {
@@ -31,9 +32,6 @@ export const upvoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error("Question not found!");
     }
 
-    console.log(userId);
-    console.log(JSON.stringify(question.author));
-
     // increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question
     if (JSON.stringify(userId) !== JSON.stringify(question.author)) {
       await User.findByIdAndUpdate(userId, {
@@ -47,6 +45,15 @@ export const upvoteQuestion = async (params: QuestionVoteParams) => {
         $inc: { reputation: hasupVoted ? -10 : 10 },
       });
     }
+
+    // const questionTags = await Question.findOne({_id : questionId});
+
+    // await Interaction.create({
+    //   user : userId,
+    //   action: "upvote",
+    //   question : questionId,
+    //   tags :
+    // })
 
     revalidatePath(path);
   } catch (error) {

@@ -7,7 +7,14 @@ import TagCard from "@/components/cards/TagCard";
 import React from "react";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
-import Loading from "./loading";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "DevFlow Tags - Find Programming Answers by Topic",
+  description:
+    "Find programming questions related to your favorite topics on DevFlow. Get help, share knowledge, and collaborate with developers from around the world.",
+  keywords: ["programming", "tags", "topics", "search", "explore"],
+};
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({

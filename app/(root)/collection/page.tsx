@@ -7,8 +7,21 @@ import { QuestionFilters } from "@/constants/filters";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import React from "react";
-import Loading from "./loading";
+
+export const metadata: Metadata = {
+  title: "DevFlow Collections - Curated Programming Knowledge",
+  description:
+    "Explore curated collections of programming knowledge on DevFlow.",
+  keywords: [
+    "programming",
+    "collections",
+    "knowledge",
+    "tutorials",
+    "resources",
+  ],
+};
 
 const Collection = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
