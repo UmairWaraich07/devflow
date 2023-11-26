@@ -2,8 +2,8 @@ import { SignIn } from "@clerk/nextjs";
 
 export default function Page() {
   return (
-    <div className="grid place-content-center min-h-screen">
+    <section className="grid place-content-center min-h-screen py-6">
       <SignIn />;
-    </div>
+    </section>
   );
 }

@@ -22,6 +22,7 @@ import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
 import { toast } from "../ui/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 interface Props {
   mongoUserId: string;
@@ -272,17 +273,22 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
             </FormItem>
           )}
         />
-        <Button
-          className="primary-gradient w-fit !text-light-900"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>{type === "Edit" ? "Editing..." : "Posting..."}</>
-          ) : (
-            <>{type === "Edit" ? "Edit Question" : "Ask a Question"}</>
-          )}
-        </Button>
+        <div className="flex justify-end">
+          <Button
+            className="primary-gradient w-fit !text-light-900 gap-1.5"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting && (
+              <ReloadIcon className="w-4 h-4 object-contain text-light-900 animate-spin" />
+            )}
+            {isSubmitting ? (
+              <>{type === "Edit" ? "Editing..." : "Posting..."}</>
+            ) : (
+              <>{type === "Edit" ? "Edit Question" : "Ask a Question"}</>
+            )}
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -40,6 +40,12 @@ const Answer = ({ questionId, authorId, question }: Props) => {
   });
 
   async function handleCreateAnswer(values: z.infer<typeof answerSchema>) {
+    if (!authorId)
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to post an answer",
+      });
+
     try {
       setIsSubmitting(true);
       await createAnswer({
@@ -69,7 +75,12 @@ const Answer = ({ questionId, authorId, question }: Props) => {
   }
 
   const generateAIAnswer = async () => {
-    if (!authorId) return;
+    if (!authorId)
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to generate an AI answer",
+      });
+
     setIsAISubmitting(true);
     try {
       const response = await fetch(
@@ -188,11 +199,16 @@ const Answer = ({ questionId, authorId, question }: Props) => {
 
           <div className="flex justify-end">
             <Button
-              className="primary-gradient w-fit !text-light-900"
+              className="primary-gradient w-fit !text-light-900 gap-1.5"
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Posting..." : "Post Answer"}
+              {isSubmitting && (
+                <ReloadIcon className="w-4 h-4 object-contain text-light-900 animate-spin" />
+              )}
+              <p className="cursor-pointer">
+                {isSubmitting ? "Posting..." : "Post Answer"}
+              </p>
             </Button>
           </div>
         </form>

@@ -14,10 +14,10 @@ import React from "react";
 
 const Page = async ({ params, searchParams }: any) => {
   const questionId = params.id;
-  const { userId } = auth();
+  const { userId: clerkId } = auth();
   let mongoUser;
-  if (userId) {
-    mongoUser = await getUserById({ userId });
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
   }
 
   const result = await getQuestionById({ questionId });
@@ -47,11 +47,11 @@ const Page = async ({ params, searchParams }: any) => {
             <Votes
               type="Question"
               itemId={JSON.stringify(questionId)}
-              userId={JSON.stringify(mongoUser._id)}
+              userId={JSON.stringify(mongoUser?._id)}
               upvotes={result.upvotes.length}
-              hasupVoted={result.upvotes.includes(mongoUser._id)}
+              hasupVoted={result.upvotes.includes(mongoUser?._id)}
               downvotes={result.downvotes.length}
-              hasdownVoted={result.downvotes.includes(mongoUser._id)}
+              hasdownVoted={result.downvotes.includes(mongoUser?._id)}
               hasSaved={mongoUser?.saved.includes(result._id)}
             />
           </div>
@@ -95,7 +95,7 @@ const Page = async ({ params, searchParams }: any) => {
 
       <AllAnswer
         questionId={questionId}
-        authorId={mongoUser._id}
+        authorId={mongoUser?._id}
         totalAnswers={result.answers.length}
         filter={searchParams?.filter}
         page={searchParams?.page ? +searchParams.page : 1}
@@ -104,7 +104,7 @@ const Page = async ({ params, searchParams }: any) => {
       <Answer
         question={result.content}
         questionId={questionId}
-        authorId={JSON.stringify(mongoUser._id)}
+        authorId={JSON.stringify(mongoUser?._id)}
       />
     </>
   );

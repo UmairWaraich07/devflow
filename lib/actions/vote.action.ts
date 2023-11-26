@@ -6,7 +6,6 @@ import { AnswerVoteParams, QuestionVoteParams } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
 import User from "@/database/user.model";
-import Interaction from "@/database/interaction.model";
 
 export const upvoteQuestion = async (params: QuestionVoteParams) => {
   try {

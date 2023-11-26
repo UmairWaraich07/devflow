@@ -11,14 +11,18 @@ const LeftsidebarContent = () => {
   const { userId: clerkId } = useAuth();
   const pathname = usePathname();
   return (
-    <section className="flex h-full flex-col gap-6 pb-12">
+    <section className="flex h-full flex-col gap-6 pb-6">
       {sidebarLinks.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
 
         if (item.route === "/profile") {
-          item.route = `/profile/${clerkId}`;
+          if (clerkId) {
+            item.route = `/profile/${clerkId}`;
+          } else {
+            return null;
+          }
         }
 
         return (

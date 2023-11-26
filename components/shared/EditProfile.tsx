@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { updateUser } from "@/lib/actions/user.action";
 import { usePathname, useRouter } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 interface Props {
   userData: string;
@@ -181,10 +182,13 @@ const EditProfile = ({ userData, clerkId }: Props) => {
         />
         <div className="flex w-full justify-end">
           <Button
-            className="primary-gradient w-fit !text-light-900"
+            className="primary-gradient w-fit !text-light-900 gap-1.5"
             type="submit"
             disabled={isSubmitting}
           >
+            {isSubmitting && (
+              <ReloadIcon className="w-4 h-4 object-contain text-light-900 animate-spin" />
+            )}
             {isSubmitting ? "Submitting..." : "Submit"}
           </Button>
         </div>

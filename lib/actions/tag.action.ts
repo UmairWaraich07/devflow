@@ -16,17 +16,44 @@ export const getTopInteractedTags = async (
 ) => {
   try {
     await connectToDB();
-    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
     const { userId } = params;
     const user = await User.findById(userId);
     if (!user) throw new Error("User not found");
 
-    // Find interaction for the users by group and tags
+    // Get all the questions published by the given user
+    const questions = await Question.find({ author: userId }).populate("tags");
 
-    return [
-      { _id: "1", name: "Tag 1" },
-      { _id: "2", name: "Tag 2" },
-    ];
+    // Create a map to store the tag counts
+    const tagCounts: { [tagId: string]: number } = {};
+    for (const question of questions) {
+      for (const tag of question.tags) {
+        if (!tagCounts[tag.id]) {
+          tagCounts[tag.id] = 0;
+        }
+        tagCounts[tag.id]++;
+      }
+    }
+
+    // Sort the tag counts in descending order
+    const sortedTagCounts = Object.entries(tagCounts).sort(
+      (a, b) => b[1] - a[1]
+    );
+
+    // Extract the top three tag IDs
+    const topThreeTagIds = sortedTagCounts.slice(0, 3).map((tag) => tag[0]);
+
+    // Fetch the top three tags
+    const topThreeTags = await Promise.all(
+      topThreeTagIds.map(async (tagId) => {
+        const tagModel = await Tag.findById(tagId);
+        return {
+          _id: tagId,
+          name: tagModel.name,
+        };
+      })
+    );
+
+    return topThreeTags;
   } catch (error) {
     console.log(`Error while fetching top tags for users : ${error}`);
     throw error;

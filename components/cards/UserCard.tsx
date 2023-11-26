@@ -17,7 +17,6 @@ interface Props {
 
 const UserCard = async ({ user }: Props) => {
   const interactedTags = await getTopInteractedTags({ userId: user._id });
-
   return (
     <Link
       href={`/profile/${user.clerkId}`}
@@ -34,10 +33,10 @@ const UserCard = async ({ user }: Props) => {
         />
 
         <div className=" mt-4 text-center">
-          <h3 className="h3-bold text-dark200_light900 line-clamp-1">
+          <h3 className="h3-bold text-dark200_light900 line-clamp-1 cursor-pointer">
             {user?.name}
           </h3>
-          <p className="body-regular text-dark500_light500 mt-2">
+          <p className="body-regular text-dark500_light500 mt-2 cursor-pointer">
             @{user?.username}
           </p>
         </div>
@@ -50,7 +49,7 @@ const UserCard = async ({ user }: Props) => {
               ))}
             </div>
           ) : (
-            <RenderTag _id="1" name="No tags yet" />
+            <RenderTag _id="1" name="No tags yet" noOpen />
           )}
         </div>
       </article>

@@ -36,6 +36,7 @@ export const sidebarLinks: SidebarLink[] = [
     imgURL: "/assets/icons/user.svg",
     route: "/profile",
     label: "Profile",
+    showSignedOut: true,
   },
   {
     imgURL: "/assets/icons/question.svg",

@@ -19,7 +19,6 @@ import { FilterQuery } from "mongoose";
 import Answer from "@/database/answer.model";
 import { BadgeCriteriaType } from "@/types";
 import { assignBadges } from "../utils";
-import { any } from "zod";
 
 export const getUserById = async (params: any) => {
   try {
@@ -144,20 +143,28 @@ export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
     if (!user) {
       throw new Error("User not found!");
     }
+    const isQuestionSaved = user.saved.includes(questionId);
 
-    const isQuestionSaved = user.saved.includes(userId);
-
-    const updateQuery = isQuestionSaved
-      ? { $pull: { saved: questionId } }
-      : { $push: { saved: questionId } };
-
-    const savedQuestion = await User.findByIdAndUpdate(userId, updateQuery, {
-      new: true,
-    });
-
-    if (!savedQuestion) {
-      throw new Error("Saved Question not Found!");
+    if (isQuestionSaved) {
+      // remove question from saved
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          $pull: { saved: questionId },
+        },
+        { new: true }
+      );
+    } else {
+      // add question to saved
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          $addToSet: { saved: questionId },
+        },
+        { new: true }
+      );
     }
+
     revalidatePath(path);
   } catch (error) {
     console.log(`Error while saving question : ${error}`);
@@ -290,6 +297,7 @@ export const getUserInfo = async (params: GetUserByIdParams) => {
       },
     ];
 
+    // @ts-ignore
     const badgeCounts = assignBadges({ criteria });
 
     return {
