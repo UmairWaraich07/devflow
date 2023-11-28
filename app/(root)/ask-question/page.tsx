@@ -6,10 +6,17 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "DevFlow Ask a Question - Get Programming Help from Experts",
+  title: "StudentFlow Ask a Question - Get Programming Help from Experts",
   description:
-    "Ask a programming question on DevFlow and get help from developers around the world. Share knowledge and collaborate with the community.",
-  keywords: ["programming", "help", "questions", "answers", "support"],
+    "Ask a programming question on StudentFlow and get help from developers around the world. Share knowledge and collaborate with the community.",
+  keywords: [
+    "programming",
+    "help",
+    "questions",
+    "answers",
+    "support",
+    "studentflow",
+  ],
 };
 
 const AskaQuestion = async () => {

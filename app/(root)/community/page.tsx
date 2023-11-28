@@ -9,15 +9,16 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "DevFlow Community - Connect with Fellow Programmers",
+  title: "StudentFlow Community - Connect with Fellow Programmers",
   description:
-    "Join the thriving DevFlow community and engage with like-minded developers.",
+    "Join the thriving StudentFlow community and engage with like-minded developers.",
   keywords: [
     "programming",
     "community",
     "developers",
     "students",
     "networking",
+    "studentflow",
   ],
 };
 

@@ -10,10 +10,17 @@ import Pagination from "@/components/shared/Pagination";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "DevFlow Tags - Find Programming Answers by Topic",
+  title: "StudentFlow Tags - Find Programming Answers by Topic",
   description:
-    "Find programming questions related to your favorite topics on DevFlow. Get help, share knowledge, and collaborate with developers from around the world.",
-  keywords: ["programming", "tags", "topics", "search", "explore"],
+    "Find programming questions related to your favorite topics on StudentFlow. Get help, share knowledge, and collaborate with developers from around the world.",
+  keywords: [
+    "programming",
+    "tags",
+    "topics",
+    "search",
+    "explore",
+    "studentflow",
+  ],
 };
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {

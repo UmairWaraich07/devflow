@@ -3,9 +3,17 @@ import Image from "next/image";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "DevFlow Jobs - Launch Your Programming Career",
-  description: "Discover exciting programming job opportunities on DevFlow.",
-  keywords: ["programming", "jobs", "careers", "opportunities", "hiring"],
+  title: "StudentFlow Jobs - Launch Your Programming Career",
+  description:
+    "Discover exciting programming job opportunities on StudentFlow.",
+  keywords: [
+    "programming",
+    "jobs",
+    "careers",
+    "opportunities",
+    "hiring",
+    "studentflow",
+  ],
 };
 
 const Jobs = () => {

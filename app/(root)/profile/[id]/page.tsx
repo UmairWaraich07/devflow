@@ -13,10 +13,17 @@ import AnswersTab from "@/components/shared/AnswersTab";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "DevFlow Profile - Showcase Your Programming Expertise",
+  title: "StudentFlow Profile - Showcase Your Programming Expertise",
   description:
-    "View your DevFlow profile and manage your programming questions and answers.",
-  keywords: ["programming", "profile", "portfolio", "showcase", "connect"],
+    "View your StudentFlow profile and manage your programming questions and answers.",
+  keywords: [
+    "programming",
+    "profile",
+    "portfolio",
+    "showcase",
+    "connect",
+    "studentflow",
+  ],
 };
 
 const Page = async ({ params, searchParams }: URLProps) => {

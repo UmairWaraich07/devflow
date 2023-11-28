@@ -16,13 +16,20 @@ import { Metadata } from "next";
 import { auth } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  title: "DevFlow - Your Programming Q&A Community",
+  title: "StudentFlow - Your Programming Q&A Community",
   description:
-    "Welcome to DevFlow, the ultimate destination for programming enthusiasts.",
+    "Welcome to StudentFlow, the ultimate destination for programming enthusiasts.",
   icons: {
     icon: "/assets/images/site-logo.svg",
   },
-  keywords: ["programming", "Q&A", "community", "students", "developers"],
+  keywords: [
+    "programming",
+    "Q&A",
+    "community",
+    "students",
+    "developers",
+    "studentflow",
+  ],
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {

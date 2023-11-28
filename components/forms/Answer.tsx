@@ -18,6 +18,7 @@ import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
+// @ts-ignore
 import { toast } from "../ui/use-toast";
 
 interface Props {

@@ -11,15 +11,16 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "DevFlow Collections - Curated Programming Knowledge",
+  title: "StudentFlow Collections - Curated Programming Knowledge",
   description:
-    "Explore curated collections of programming knowledge on DevFlow.",
+    "Explore curated collections of programming knowledge on StudentFlow.",
   keywords: [
     "programming",
     "collections",
     "knowledge",
     "tutorials",
     "resources",
+    "studentflow",
   ],
 };
 
